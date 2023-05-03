@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -99,8 +100,21 @@ public class MainActivity extends AppCompatActivity {
                 mCanvas.drawText(text, x, y, mPaintText);
                 mOffset += OFFSET;
 
+                mPaint.setColor(mColorBackground - MULTIPLIER * mOffset);
+                Point a = new Point(halfWidth-50, halfHeight-50);
+                Point b = new Point(halfWidth+50, halfHeight-50);
+                Point c = new Point(halfWidth, halfHeight+250);
+
                 Path path = new Path();
-                path.setFillType(Path.);
+                path.setFillType(Path.FillType.EVEN_ODD);
+                path.lineTo(a.x, a.y);
+                path.lineTo(b.x, b.y);
+                path.lineTo(c.x, c.y);
+                path.lineTo(a.x, a.y);
+                path.close();
+
+                mCanvas.drawPath(path, mPaint);
+                mOffset += OFFSET;
             }
         }
 
