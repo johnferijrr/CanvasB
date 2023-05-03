@@ -6,6 +6,7 @@ import androidx.core.content.res.ResourcesCompat;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
@@ -73,6 +74,36 @@ public class MainActivity extends AppCompatActivity {
             mImageView.setImageBitmap(mBitmap);
             mCanvas = new Canvas(mBitmap);
             mCanvas.drawColor(mColorBackground);
+
+            mCanvas.drawText(getString(R.string.keep_tapping),
+                    100, 100, mPaintText);
+            mOffset += OFFSET;
+        }else {
+            if (mOffset < halfWidth && mOffset < halfHeight) {
+                mPaint.setColor(mColorRectangle - MULTIPLIER * mOffset);
+                mRect.set(mOffset, mOffset, vWidth - mOffset,
+                        vWidth - mOffset);
+                mCanvas.drawRect(mRect, mPaint);
+                mOffset += OFFSET;
+            }
+            else {
+                mPaint.setColor(mColorCircle - MULTIPLIER * mOffset);
+                mCanvas.drawCircle(halfWidth, halfHeight,
+                        halfHeight/3, mPaint);
+                String text = getString(R.string.done);
+
+                mPaintText.getTextBounds(text, 0, text.length(),
+                        mBounds);
+                int x = halfWidth - mBounds.centerX();
+                int y = halfHeight - mBounds.centerY();
+                mCanvas.drawText(text, x, y, mPaintText);
+                mOffset += OFFSET;
+
+                Path path = new Path();
+                path.setFillType(Path.);
+            }
         }
+
+        view.invalidate();
     }
 }
